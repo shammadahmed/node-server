@@ -10,6 +10,20 @@ const server = http.createServer((req, res) => {
 		} else {
 			res.statusCode = 200;
 			res.setHeader('Content-type', 'text/html');
+			reqObj = {
+				url: req.url,
+				method: req.method,
+				httpVersion: req.httpVersion,
+				headers: req.headers
+			};
+
+			resObj = {
+				statusMessage: res.statusMessage,
+				statusCode: res.statusCode,
+				_header: res._header
+			}
+			data = data.replace('{{ req }}', JSON.stringify(reqObj, null, 4))
+			data = data.replace('{{ res }}', JSON.stringify(resObj, null, 2))
 			res.end(data);
 		}
 	});
